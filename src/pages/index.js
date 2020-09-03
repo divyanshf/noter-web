@@ -71,7 +71,7 @@ export default function Home({ changeTheme }) {
 
   //functions
   function checkNote(note) {
-    if (!note.trash && !note.archive && !note.star) {
+    if (!note.trash && !note.archive) {
       return true;
     }
     return false;
