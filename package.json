@@ -8,8 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "faker": "^5.1.0",
+    "firebase": "^7.19.1",
     "next": "9.5.2",
+    "nprogress": "^0.2.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "16.13.1",
+    "react-responsive": "^8.1.0"
   }
 }

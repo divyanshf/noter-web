@@ -5,6 +5,13 @@
 /.pnp
 .pnp.js
 
+#fire
+/src/config
+/firebase.json
+/firestore.rules
+/firestore.indexes.json
+/.firebaserc
+
 # testing
 /coverage
 
