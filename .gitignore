@@ -8,7 +8,6 @@
 #fire
 /src/config
 /firebase.json
-/firestore.rules
 /firestore.indexes.json
 /.firebaserc
 
