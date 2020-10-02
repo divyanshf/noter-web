@@ -6,6 +6,7 @@ import Link from "next/link";
 import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import { yellow, orange } from '@material-ui/core/colors';
 import { SwipeableDrawer } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { ListItem } from "@material-ui/core";
 import { ListItemIcon } from "@material-ui/core";
 import { ListItemText } from "@material-ui/core";
@@ -20,6 +21,9 @@ import AddAlertIcon from '@material-ui/icons/AddAlert';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
 import StarIcon from '@material-ui/icons/Star';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const styles = makeStyles((theme) => ({
     list: {
@@ -79,16 +83,15 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
 
     //styles
     const drawerBottom = {
-        position:"absolute",
-        bottom: "0"
-    };
-    const linkContainer = {
-        display:"flex",
-        margin:"auto 10px"
+        position: "absolute",
+        bottom: "10px",
+        width:"100%",
+        display: "flex",
+        justifyContent:"center",
+        alignItems:"center"
     };
     const anchor = {
-        color: "skyblue",
-        margin:"auto 5px"
+        margin:"auto"
     };
 
 
@@ -151,31 +154,27 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
                 {listItems.map(renderList)}
             </List>
             <div style={drawerBottom}>
-                <div style={linkContainer}>
-                    <Link href="https://github.com/DivyanshFalodiya">
-                        <a style={anchor}>
-                            <div>
-                                <p>Github</p>
-                            </div>
-                        </a>
-                    </Link>
-                </div>
-                <div style={linkContainer}>
-                    <Link href="https://www.facebook.com/divyansh.falodiya.1">
-                        <a style={anchor}>
-                            <div>
-                                <p>Facebook</p>
-                            </div>
-                        </a>
-                    </Link>
-                    <Link href="https://twitter.com/DFalodiya">
-                        <a style={anchor}>
-                            <div>
-                                <p>Twitter</p>
-                            </div>
-                        </a>
-                    </Link>
-                </div>
+                <Link href="https://github.com/DivyanshFalodiya">
+                    <a style={anchor}>
+                        <IconButton>
+                            <GitHubIcon />
+                        </IconButton>
+                    </a>
+                </Link>
+                <Link href="https://www.facebook.com/divyansh.falodiya.1">
+                    <a style={anchor}>
+                        <IconButton>
+                            <FacebookIcon />
+                        </IconButton>
+                    </a>
+                </Link>
+                <Link href="https://twitter.com/DFalodiya">
+                    <a style={anchor}>
+                        <IconButton>
+                            <TwitterIcon />
+                        </IconButton>
+                    </a>
+                </Link>
             </div>
         </SwipeableDrawer>
     );
