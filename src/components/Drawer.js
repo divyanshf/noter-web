@@ -48,43 +48,56 @@ const ThemeSwitch = withStyles({
 })(Switch);
 
 export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) {
-    
+
     //initialize
     const classes = styles();
     const theme = useTheme();
-    const [checkState, setCheckState] = useState(theme.palette.type=="dark" ? true : false);
-    const [routeChecker, setRouteChecker] = useState(route); 
-    
-    //styles
+    const [checkState, setCheckState] = useState(theme.palette.type == "dark" ? true : false);
+    const [routeChecker, setRouteChecker] = useState(route);
     const listItems = [
         {
             text: "Notes",
             icon: <NoteIcon />,
-            link:"/"
+            link: "/"
         },
         {
             text: "Starred",
             icon: <StarIcon />,
-            link:"starred"
+            link: "starred"
         },
         {
             text: "Archives",
             icon: <ArchiveIcon />,
-            link:"archives"
+            link: "archives"
         },
         {
             text: "Trash",
             icon: <DeleteSharpIcon />,
-            link:"trash"
+            link: "trash"
         },
     ];
 
+    //styles
+    const drawerBottom = {
+        position:"absolute",
+        bottom: "0"
+    };
+    const linkContainer = {
+        display:"flex",
+        margin:"auto 10px"
+    };
+    const anchor = {
+        color: "skyblue",
+        margin:"auto 5px"
+    };
+
+
     //functions
-    function removeSlash(route){
-        if(route)
-        return route.slice(1);
+    function removeSlash(route) {
+        if (route)
+            return route.slice(1);
     }
-    function handleThemeChange(){
+    function handleThemeChange() {
         setCheckState(!checkState);
         changeTheme();
     }
@@ -99,7 +112,7 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
         return (
             <Link key={index} href={element.link}>
                 <a>
-                    <ListItem selected={routeChecker==element.link ? true : false} button key={index}>
+                    <ListItem selected={routeChecker == element.link ? true : false} button key={index}>
                         <ListItemIcon>
                             {element.icon}
                         </ListItemIcon>
@@ -131,12 +144,39 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
                         name="theme"
                     />
                     <Typography variant="h6" color="primary">
-                        {theme.palette.type=="dark" ? <NightsStayIcon /> : <WbSunnyIcon />}
+                        {theme.palette.type == "dark" ? <NightsStayIcon /> : <WbSunnyIcon />}
                     </Typography>
                 </div>
                 <Divider />
                 {listItems.map(renderList)}
             </List>
+            <div style={drawerBottom}>
+                <div style={linkContainer}>
+                    <Link href="https://github.com/DivyanshFalodiya">
+                        <a style={anchor}>
+                            <div>
+                                <p>Github</p>
+                            </div>
+                        </a>
+                    </Link>
+                </div>
+                <div style={linkContainer}>
+                    <Link href="https://www.facebook.com/divyansh.falodiya.1">
+                        <a style={anchor}>
+                            <div>
+                                <p>Facebook</p>
+                            </div>
+                        </a>
+                    </Link>
+                    <Link href="https://twitter.com/DFalodiya">
+                        <a style={anchor}>
+                            <div>
+                                <p>Twitter</p>
+                            </div>
+                        </a>
+                    </Link>
+                </div>
+            </div>
         </SwipeableDrawer>
     );
 }
