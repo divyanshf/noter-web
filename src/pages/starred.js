@@ -73,7 +73,7 @@ export default function Trash({ changeTheme }) {
 
   //functions
   function checkNote(note) {
-    if (!note.archive && note.star) {
+    if (!note.archive && !note.trash && note.star) {
       return true;
     }
     return false;
