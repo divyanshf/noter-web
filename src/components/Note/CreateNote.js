@@ -91,7 +91,7 @@ export default function CreateNote({ toggleMount }) {
                     <div>
                         <InputBase
                             placeholder="Title"
-                            multiline
+                            fullWidth
                             rowsMax={2}
                             onChange={handleNoteChange}
                             name="title"
@@ -101,6 +101,7 @@ export default function CreateNote({ toggleMount }) {
                     <div>
                         <InputBase
                             placeholder="Note it down ..."
+                            fullWidth
                             multiline
                             rowsMin={3}
                             onChange={handleNoteChange}
