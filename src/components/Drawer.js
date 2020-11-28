@@ -58,6 +58,7 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
     const theme = useTheme();
     const [checkState, setCheckState] = useState(theme.palette.type == "dark" ? true : false);
     const [routeChecker, setRouteChecker] = useState(route);
+    const [linkHover, setLinkHover] = useState(false);
     const listItems = [
         {
             text: "Notes",
@@ -93,6 +94,10 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
     const anchor = {
         margin:"auto"
     };
+    const linkStyle={
+        color: "skyblue",
+        textDecoration: linkHover ? "underline" : "none"
+    }
 
 
     //functions
@@ -154,25 +159,9 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
                 {listItems.map(renderList)}
             </List>
             <div style={drawerBottom}>
-                <Link href="https://github.com/DivyanshFalodiya">
+                <Link href="https://github.com/DivyanshFalodiya/Noter">
                     <a style={anchor}>
-                        <IconButton>
-                            <GitHubIcon />
-                        </IconButton>
-                    </a>
-                </Link>
-                <Link href="https://www.facebook.com/divyansh.falodiya.1">
-                    <a style={anchor}>
-                        <IconButton>
-                            <FacebookIcon />
-                        </IconButton>
-                    </a>
-                </Link>
-                <Link href="https://twitter.com/DFalodiya">
-                    <a style={anchor}>
-                        <IconButton>
-                            <TwitterIcon />
-                        </IconButton>
+                        <p style={linkStyle} onMouseEnter={()=>{setLinkHover(true)}} onMouseLeave={()=>{setLinkHover(false)}} >Open-Source</p>
                     </a>
                 </Link>
             </div>

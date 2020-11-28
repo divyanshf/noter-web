@@ -1,16 +1,18 @@
-//ESSENTIAL
+//ESSENTIALS
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useMediaQuery } from "react-responsive";
+import { SearchContext } from "../context/searchContext";
 import Layout from "../components/Layout";
 import Note from "../components/Note/Note";
+import CreateNote from "../components/Note/CreateNote";
 import Snackbar from "../components/Note/Snackbar";
 
 //MATERIAL-UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
 import { CircularProgress } from '@material-ui/core';
 
@@ -18,62 +20,67 @@ import { CircularProgress } from '@material-ui/core';
 import fire from "../config/fire-config";
 
 const useStyles = makeStyles((theme) => ({
-  girdContainer: {
-    marginTop: theme.spacing(2),
-  },
-  createrContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
 
 }));
 
-export default function Trash({ changeTheme }) {
+export default function Search({ changeTheme }) {
   //initialize
-  const classes = useStyles();
   const router = useRouter();
+  const classes = useStyles();
   const theme = useTheme();
-  const [progress , setProgress] = useState(true);
-  const [openSnack, setOpenSnack] = useState(false);
-  const [snackMessage, setSnackMessage] = useState("");
   const [userData, setUserData] = useState({
-    displayName:"",
-    email:""
+    displayName: "",
+    email: ""
   });
+  const [progress, setProgress] = useState(true);
   const [data, setData] = useState([]);
   const [mount, setMount] = useState(0);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [search, setSearch] = useContext(SearchContext);
+
   const isMobile = useMediaQuery({
     query: "(max-device-width: 425px)",
   });
   const isTablet = useMediaQuery({
-    query: "(device-width: 768px)",
+    query: "(max-device-width: 768px)",
+  });
+  const isLarge = useMediaQuery({
+    query: "(min-device-width: 800px)",
   });
 
   //styles
+  const container = {
+    width: "100vw",
+    minHeight: "100vh",
+    paddingTop: theme.spacing(12),
+  };
   const help = {
-    marginTop: "2rem",
+    marginTop: theme.spacing(10),
     textAlign: "center",
     fontFamily: "Architects Daughter",
     color: "grey",
+  };
+  const createrContainer = {
+    marginBottom: theme.spacing(2)
+  };
+  const gridContainer = {
+    marginTop: theme.spacing(2),
+  };
+  const progressStyle = {
+    marginTop: "5rem",
+    height: "3rem"
   };
   const head = {
     textAlign: "center",
     marginBottom: "1rem",
   };
-  const container = {
-    width: "100vw",
-    minHeight: "100vh",
-    paddingTop: theme.spacing(10),
-  };
-  const progressStyle = {
-    marginTop:"5rem",
-    height:"3rem"
-  };
 
   //functions
   function checkNote(note) {
-    if (note.trash) {
+    if(search === "")
+        return false;
+    if (note.title.search(search) != -1) {
       return true;
     }
     return false;
@@ -100,6 +107,11 @@ export default function Trash({ changeTheme }) {
       });
   }
 
+  function openSnackFunction(message) {
+    setSnackMessage(message);
+    setOpenSnack(true);
+  };
+
   //mount
   useEffect(() => {
     fire.auth().onAuthStateChanged(function (user) {
@@ -117,23 +129,14 @@ export default function Trash({ changeTheme }) {
   function renderText() {
     return (
       <Typography variant="h5" style={help}>
-        No trash note!
+          {search === "" ? "Try a search" : "Couldn't find anything"}
       </Typography>
     );
   }
 
-  function openSnackFunction(message) {
-    setSnackMessage(message);
-    setOpenSnack(true);
-  };
-
   function renderNote(note) {
     return (
-      <Grid
-        item
-        key={note.id}
-        xs={isTablet ? 6 : isMobile ? 12 : 3}
-      >
+      <Grid item key={note.id} xs={isLarge ? 3 : isMobile ? 12 : 6}>
         <Note openSnackFunction={openSnackFunction} toggleMount={toggleMount} user={userData} note={note} />
       </Grid>
     );
@@ -146,21 +149,21 @@ export default function Trash({ changeTheme }) {
         direction="row"
         justify="flex-start"
         alignItems="flex-start"
-        className={classes.girdContainer}
+        style={gridContainer}
       >
         {data.map(renderNote)}
       </Grid>
     );
   }
 
-  function renderProgress(){
+  function renderProgress() {
     return (
       <div style={progressStyle}>
-        <CircularProgress 
+        <CircularProgress
           style={{
-            position:"absolute",
-            left:"50%",
-          }}  />
+            position: "absolute",
+            left: "50%",
+          }} />
       </div>
     );
   }
@@ -170,10 +173,10 @@ export default function Trash({ changeTheme }) {
     <Layout route={router.pathname} changeTheme={changeTheme} toggleMount={toggleMount}>
       <Container style={container}>
         <Typography variant="h5" style={head}>
-          Trash Notes
+          Search Notes
         </Typography>
         <Divider />
-        {progress ? renderProgress() : data.length ? renderNotes() : renderText() }
+        {progress ? renderProgress() : data.length ? renderNotes() : renderText()}
         <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
       </Container>
     </Layout>

@@ -96,6 +96,7 @@ export default function CreateNote({ toggleMount }) {
                             onChange={handleNoteChange}
                             name="title"
                             value={note.title}
+                            autoComplete = "off"
                         />
                     </div>
                     <div>

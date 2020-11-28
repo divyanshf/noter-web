@@ -24,7 +24,7 @@ export default function Login() {
     const theme = useTheme();
     const [userName, setUserName] = useState("");
     const [pass, setPass] = useState("");
-    const [err, setErr] = useState("");
+    const [error, setError] = useState("");
 
     //styles
     const input = {
@@ -62,10 +62,11 @@ export default function Login() {
                     });
             })
             .catch((err) => {
-                console.log(err.code, err.message);
-                setErr(err.message);
+                console.log(err.code);
+                if(err.code === "auth/user-not-found"){
+                    setError("User Not Found");
+                }
             });
-
     }
 
     //render
@@ -96,6 +97,12 @@ export default function Login() {
                     value={pass}
                 />
             </div>
+            <Typography style={{
+                color:"red",
+                fontSize:"0.8rem"
+            }}>
+                {error}
+            </Typography>
             <div style={input}>
                 <Button type="submit" color="primary">
                     Login

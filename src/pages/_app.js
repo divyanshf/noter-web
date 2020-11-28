@@ -1,5 +1,6 @@
 //ESSENTIALS
 import "../styles/globals.css";
+import { SearchProvider } from "../context/searchContext";
 import { useState, useEffect } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import Head from "next/head";
@@ -39,20 +40,22 @@ function MyApp({ Component, pageProps }) {
   //render
   return (
     <ThemeProvider theme={theme}>
-      <Scrollbars
-        style={{ width: "100vw", height: "100vh" }}
-        autoHide
-        thumbMinSize={30}
-        universal={true}
-      >
-        <CssBaseline />
-        <Head>
-          <title>Noter</title>
-          <link rel="icon" href="/favicon.ico" />
-          {/* <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> */}
-        </Head>
-        <Component changeTheme={handleThemeChange} {...pageProps} />
-      </Scrollbars>
+      <SearchProvider>
+        <Scrollbars
+          style={{ width: "100vw", height: "100vh" }}
+          autoHide
+          thumbMinSize={30}
+          universal={true}
+        >
+          <CssBaseline />
+          <Head>
+            <title>Noter</title>
+            <link rel="favicon" href="/favicon.ico" />
+            {/* <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> */}
+          </Head>
+          <Component changeTheme={handleThemeChange} {...pageProps} />
+        </Scrollbars>
+      </SearchProvider>
     </ThemeProvider>
   );
 }

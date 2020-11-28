@@ -53,7 +53,7 @@ export default function Setting({
         paddingTop: "0"
     };
     const button = {
-        marginTop: "1rem"
+        margin:"1rem auto auto auto"
     };
 
     //functions

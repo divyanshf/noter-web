@@ -94,6 +94,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
                 handleClose={handleClosePop}
                 open={openPop}
                 openSnack={openSnackFunction}
+                toggleMount = {toggleMount}
             />
             <CardActions className={classes.actions}>
                 <NoteOptions

@@ -8,7 +8,7 @@ import Drawer from "./Drawer";
 //FIREBASE
 import fire from "../config/fire-config";
 
-export default function FixedCotent({ changeTheme, route }) {
+export default function FixedCotent({ changeTheme, route, toggleMount }) {
     //initialize
     const router = useRouter();
     const [drawerState, setDrawerState] = useState(false);
@@ -73,6 +73,7 @@ export default function FixedCotent({ changeTheme, route }) {
                 setUserData={setUserData}
                 changeMenuState={changeDrawerState}
                 changeSettingState={changeSettingState}
+                toggleMount = {toggleMount}
             />
             <Drawer
                 route={route}
