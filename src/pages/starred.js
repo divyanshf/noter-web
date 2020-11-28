@@ -167,7 +167,7 @@ export default function Trash({ changeTheme }) {
 
   //render
   return (
-    <Layout route={router.pathname} changeTheme={changeTheme}>
+    <Layout route={router.pathname} changeTheme={changeTheme} toggleMount={toggleMount}>
       <Container style={container}>
         <Typography variant="h5" style={head}>
           Starred Notes

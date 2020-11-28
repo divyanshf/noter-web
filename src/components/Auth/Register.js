@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 //MATERIAL-UI
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 
 //FIREBASE
@@ -30,6 +30,7 @@ export default function Register() {
     });
     const [passError, setPassError] = useState(false);
     const [cpassError, setCPassError] = useState(false);
+    const [error, setError] = useState("");
 
     //functions
     function handleChange(event) {
@@ -77,6 +78,9 @@ export default function Register() {
             })
             .catch((err) => {
                 console.log(err);
+                if(err.code === "auth/email-already-in-use"){
+                    setError("Already registered !!");
+                }
             });
     }
 
@@ -130,6 +134,12 @@ export default function Register() {
                 value={user.cpass}
                 required
             />
+            <Typography style={{
+                color:"red",
+                fontSize:"0.8rem"
+            }}>
+                {error}
+            </Typography>
             <Button type="submit" className={classes.input} color="primary">
                 Register
             </Button>

@@ -15,7 +15,7 @@ import { IconButton } from "@material-ui/core";
 //FIREBASE
 import fire from "../../config/fire-config";
 
-export default function NotePop({ handleClose, open, note, user, openSnack }) {
+export default function NotePop({ handleClose, open, note, user, openSnack, toggleMount }) {
     //initialize
     const [details, setDetails] = useState({
         title: note.title,
@@ -56,6 +56,7 @@ export default function NotePop({ handleClose, open, note, user, openSnack }) {
             })
             .then(() => {
                 openSnack("Note updated!");
+                toggleMount();
                 handleClose();
             })
             .catch((err) => {
