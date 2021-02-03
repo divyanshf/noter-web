@@ -22,6 +22,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import fire from "../config/fire-config";
 
 const styles = makeStyles((theme) => ({
+  root:{
+    boxShadow:"none",
+    borderBottom: `1px solid ${theme.palette.divider}`
+  }
 }));
 
 export default function Header({
@@ -158,7 +162,7 @@ export default function Header({
 
   //render
   return (
-    <AppBar color="inherit" position="fixed">
+    <AppBar className={classes.root} color="inherit" position="fixed">
       <Toolbar>
         <IconButton
           edge="start"

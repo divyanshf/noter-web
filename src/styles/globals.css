@@ -20,13 +20,12 @@ input:-webkit-autofill {
 }
 
 ::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  background: #454545;
+  width: 10px;
+  background: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6d6d6d;
+  background: #969696;
 }
 
 a {

@@ -6,6 +6,7 @@ import NoteOptions from "./NoteOptions";
 import NotePop from "./NotePop";
 
 //MATERIAL-UI
+import { useTheme } from '@material-ui/core/styles';
 import { makeStyles } from "@material-ui/core/styles";
 import { Card } from "@material-ui/core";
 import { CardActionArea } from "@material-ui/core";
@@ -16,7 +17,9 @@ import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "90%",
+        boxShadow: "none",
         margin: "1rem auto",
+        border: `1px solid ${theme.palette.divider}`
     },
     actions: {
         display: "flex",
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Note({ note, user, toggleMount, openSnackFunction }) {
     //initialize
     const classes = useStyles();
+    const theme = useTheme();
     const isTablet = useMediaQuery({
         query: "(device-width: 768px)",
     });
