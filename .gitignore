@@ -10,6 +10,7 @@
 /firebase.json
 /firestore.indexes.json
 /.firebaserc
+.firebase
 
 # testing
 /coverage

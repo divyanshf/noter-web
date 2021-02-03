@@ -17,7 +17,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import fire from "../../config/fire-config";
 
 const useStyles = makeStyles((theme) => ({
-
+    card:{
+        maxWidth: "500px",
+        margin: "auto",
+        boxShadow: `2px 2px 2px ${theme.palette.divider}, -2px -2px 2px ${theme.palette.divider}`,
+        border: `1px solid ${theme.palette.divider}`
+    }
 }));
 
 export default function CreateNote({ toggleMount }) {
@@ -86,7 +91,7 @@ export default function CreateNote({ toggleMount }) {
     //render
     return (
         <div>
-            <Card style={root}>
+            <Card className={classes.card}>
                 <CardContent>
                     <div>
                         <InputBase

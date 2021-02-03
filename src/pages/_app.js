@@ -19,15 +19,21 @@ function MyApp({ Component, pageProps }) {
   const [darkState, setDarkState] = useState(true);
   const mainPrimaryColor = darkState ? yellow[500] : orange[900];
   const mainSecondaryColor = darkState ? red[500] : red[900];
+  const paperColor = darkState ? grey[900] : grey[50];
+  const backDefaultColor = darkState ? grey[900] : grey[50];
   const palletType = darkState ? "dark" : "light";
   const theme = createMuiTheme({
     palette: {
-      type: palletType,
+      type : palletType,
       primary: {
-        main: mainPrimaryColor,
+        main : mainPrimaryColor,
       },
       secondary: {
-        main: mainSecondaryColor,
+        main : mainSecondaryColor,
+      },
+      background : {
+        paper : paperColor,
+        default : backDefaultColor
       },
     },
   });
@@ -41,12 +47,6 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <SearchProvider>
-        <Scrollbars
-          style={{ width: "100vw", height: "100vh" }}
-          autoHide
-          thumbMinSize={30}
-          universal={true}
-        >
           <CssBaseline />
           <Head>
             <title>Noter</title>
@@ -54,7 +54,6 @@ function MyApp({ Component, pageProps }) {
             {/* <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> */}
           </Head>
           <Component changeTheme={handleThemeChange} {...pageProps} />
-        </Scrollbars>
       </SearchProvider>
     </ThemeProvider>
   );
