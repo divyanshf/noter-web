@@ -50,7 +50,7 @@ export default function Login() {
         event.preventDefault();
         fire
             .auth()
-            .setPersistence(fire.auth.Auth.Persistence.SESSION)
+            .setPersistence(fire.auth.Auth.Persistence.LOCAL)
             .then(() => {
                 return fire
                     .auth()
