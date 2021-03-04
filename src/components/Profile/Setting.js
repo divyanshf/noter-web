@@ -1,5 +1,5 @@
 //ESSENTIALS
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ProfilePop from "./ProfilePop";
 
 //MATERIAL-UI
@@ -12,7 +12,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { List } from "@material-ui/core";
 import { ListItem } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
-import { ExitToApp } from "@material-ui/icons";
+import { Edit, ExitToApp } from "@material-ui/icons";
+import fire from "../../config/fire-config";
+import { storage } from "firebase";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -28,7 +30,9 @@ export default function Setting({
 }) {
     //initialize
     const classes = useStyles();
+    const ref = useRef(null)
     const [openLogoutPop, setOpenLogout] = useState(false);
+    const [file, setFile] = useState(null);
 
     //styles
     const root = {
@@ -65,6 +69,73 @@ export default function Setting({
         setOpenLogout(false);
     };
 
+    function uploadImage(){
+        ref.current.click()
+        console.log(ref.current.value);
+    }
+
+    function onFileChange(e){
+        setFile(e.target.files[0])
+    }
+
+    useEffect(() => {
+        if(file != null){
+            console.log(file);
+            onFileSubmit()
+        }
+    }, [file])
+
+    function onFileSubmit(){
+        var user = fire.auth().currentUser;
+        var storageRef = fire.storage().ref(user.email + '/profile/' + file.name);
+        var task = storageRef.put(file)
+            .then(()=>{
+                    setFile(null)
+                    storageRef.getDownloadURL().then((url)=>{
+                        user.updateProfile({
+                            displayName: user.displayName,
+                            photoURL: url
+                        })
+                    })
+                })
+    }
+
+    function renderEditButton(){
+        return(
+            <IconButton onClick={uploadImage} style={{
+                position:"absolute",
+                bottom:"0",
+                right:"0",
+                padding:"5px",
+            }}>
+                <Edit style={{
+                    width:"1rem",
+                    height:"1rem"
+                }}/>
+                <input ref={ref} id="image-input" type="file" name="image" onChange={onFileChange} style={{
+                    display:"none"
+                }} />
+            </IconButton>
+        );
+    }
+
+    function renderAvatar(){
+        if(fire.auth().currentUser.photoURL == null){
+            return(
+                <Avatar style={center}>
+                    {userData.displayName ? userData.displayName[0].toUpperCase() : ""}
+                </Avatar>
+            );
+        }
+        else{
+            return(
+                <Avatar 
+                    style={center}
+                    src={fire.auth().currentUser.photoURL} />
+            )
+        }
+    }
+
     //render
     return (
         <Popover
@@ -82,9 +153,8 @@ export default function Setting({
         >
             <List style={root}>
                 <ListItem>
-                    <Avatar style={center}>
-                        {userData.displayName ? userData.displayName[0] : ""}
-                    </Avatar>
+                    {renderAvatar()}
+                    {renderEditButton()}
                 </ListItem>
                 <ListItem>
                     <Typography variant="h6" style={name}> {userData.displayName ? userData.displayName : ""} </Typography>

@@ -160,16 +160,25 @@ export default function Home({ changeTheme }) {
   }
 
   //render
-  return (
-    <Layout route={router.pathname} changeTheme={changeTheme}>
-      <Container style={container}>
-        <div style={createrContainer}>
-          <CreateNote toggleMount={toggleMount} />
-        </div>
-        <Divider />
-        {progress ? renderProgress() : data.length ? renderNotes() : renderText()}
-        <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
-      </Container>
-    </Layout>
-  );
+  if(userData.displayName != ""){
+    return (
+      <Layout route={router.pathname} changeTheme={changeTheme}>
+        <Container style={container}>
+          <div style={createrContainer}>
+            <CreateNote toggleMount={toggleMount} />
+          </div>
+          <Divider />
+          {progress ? renderProgress() : data.length ? renderNotes() : renderText()}
+          <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
+        </Container>
+      </Layout>
+    );
+  }
+  else{
+    return(
+      <div>
+        {renderProgress()}
+      </div>
+    );
+  }
 }

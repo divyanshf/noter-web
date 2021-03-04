@@ -147,18 +147,32 @@ export default function Header({
   function renderProfile() {
     if(router.route !== "/search" || (router.route === "/search" && isMobile == false))
     return (
-<Tooltip title="Profile Setting">
+        <Tooltip title="Profile Setting">
           <IconButton onClick={openPopup} style={{
             padding: "5px",
             marginLeft: theme.spacing(1),
           }}>
-            <Avatar>
-              {userData.displayName ? userData.displayName[0] : ""}
-            </Avatar>
+            {renderAvatar()}
           </IconButton>
         </Tooltip>
     );
   }
+
+  function renderAvatar(){
+    if(fire.auth().currentUser.photoURL == null){
+        return(
+            <Avatar>
+                {userData.displayName ? userData.displayName[0].toUpperCase() : ""}
+            </Avatar>
+        );
+    }
+    else{
+        return(
+            <Avatar 
+                src={fire.auth().currentUser.photoURL} />
+        )
+    }
+}
 
   //render
   return (
