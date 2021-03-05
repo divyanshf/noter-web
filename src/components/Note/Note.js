@@ -8,7 +8,7 @@ import NotePop from "./NotePop";
 //MATERIAL-UI
 import { useTheme } from '@material-ui/core/styles';
 import { makeStyles } from "@material-ui/core/styles";
-import { Card } from "@material-ui/core";
+import { Card, InputBase } from "@material-ui/core";
 import { CardActionArea } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
@@ -24,11 +24,16 @@ const useStyles = makeStyles((theme) => ({
     actions: {
         display: "flex",
         justifyContent: "flex-end",
+        transition: "0.5s ease"
     },
     chip: {
         fontSize: 12,
         margin: theme.spacing(0.5),
     },
+    content:{
+        width: '100%',
+        fontSize: 13
+    }
 }));
 
 export default function Note({ note, user, toggleMount, openSnackFunction }) {
@@ -75,6 +80,29 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
         return note.content.slice(0, 143) + "...";
     }
 
+    function renderInputBase(){
+        return(
+            <InputBase
+                className={classes.content}
+                value={renderContent()} 
+                multiline
+                disabled />
+        );
+    }
+
+    function renderNoteOptions(){
+        return(
+            <NoteOptions
+                user={user}
+                note={note}
+                mouseOver={mouseOver}
+                setMouseOver={setMouseOver}
+                toggleMount={toggleMount}
+                openSnack={openSnackFunction}
+            />
+        );
+    }
+
     //render
     return (
         <Card
@@ -84,12 +112,10 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
         >
             <CardActionArea>
                 <CardContent onClick={handleOpenPop}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="subtitle1" component="h2">
                         {renderTitle()}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {renderContent()}
-                    </Typography>
+                    {renderContent() ? renderInputBase() : null}
                 </CardContent>
             </CardActionArea>
             <NotePop
@@ -101,14 +127,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
                 toggleMount = {toggleMount}
             />
             <CardActions className={classes.actions}>
-                <NoteOptions
-                    user={user}
-                    note={note}
-                    mouseOver={mouseOver}
-                    setMouseOver={setMouseOver}
-                    toggleMount={toggleMount}
-                    openSnack={openSnackFunction}
-                />
+                {mouseOver ? renderNoteOptions() : null}
             </CardActions>
         </Card>
     );

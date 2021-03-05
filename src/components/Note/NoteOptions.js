@@ -25,7 +25,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
     //styles
     const toggleOptionsStyle = {
         opacity: `${mouseOver ? "100" : "0"}`,
-        transition: "0.3s ease",
+        // transition: "0.3s ease",
     };
 
     const iconStyle = {
@@ -128,7 +128,9 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
 
     //render
     return (
-        <div>
+        <div style={{
+            transition:"0.5s ease"
+        }}>
             <Tooltip title={note.star ? "Unstar" : "Star"}>
                 <IconButton onClick={starNote} style={toggleOptionsStyle}>
                     {note.star ? (

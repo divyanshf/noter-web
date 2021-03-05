@@ -159,7 +159,7 @@ export default function Header({
   }
 
   function renderAvatar(){
-    if(fire.auth().currentUser.photoURL == null){
+    if(fire.auth().currentUser == null || fire.auth().currentUser.photoURL == null){
         return(
             <Avatar>
                 {userData.displayName ? userData.displayName[0].toUpperCase() : ""}

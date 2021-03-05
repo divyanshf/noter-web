@@ -120,7 +120,7 @@ export default function Setting({
     }
 
     function renderAvatar(){
-        if(fire.auth().currentUser.photoURL == null){
+        if(fire.auth().currentUser == null || fire.auth().currentUser.photoURL == null){
             return(
                 <Avatar style={center}>
                     {userData.displayName ? userData.displayName[0].toUpperCase() : ""}

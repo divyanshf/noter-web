@@ -53,6 +53,7 @@ export default function Search({ changeTheme }) {
   const container = {
     width: "100vw",
     minHeight: "100vh",
+    marginBottom: "2rem",
     paddingTop: theme.spacing(12),
   };
   const help = {
@@ -169,16 +170,25 @@ export default function Search({ changeTheme }) {
   }
 
   //render
-  return (
-    <Layout route={router.pathname} changeTheme={changeTheme} toggleMount={toggleMount}>
-      <Container style={container}>
-        <Typography variant="h5" style={head}>
-          Search Notes
-        </Typography>
-        <Divider />
-        {progress ? renderProgress() : data.length ? renderNotes() : renderText()}
-        <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
-      </Container>
-    </Layout>
-  );
+  if(fire.auth().currentUser != null){
+    return (
+      <Layout route={router.pathname} changeTheme={changeTheme} toggleMount={toggleMount}>
+        <Container style={container}>
+          <Typography variant="h5" style={head}>
+            Search Notes
+          </Typography>
+          <Divider />
+          {progress ? renderProgress() : data.length ? renderNotes() : renderText()}
+          <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
+        </Container>
+      </Layout>
+    );
+  }
+  else{
+    return(
+      <div>
+        {renderProgress()}
+      </div>
+    );
+  }
 }

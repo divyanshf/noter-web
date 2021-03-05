@@ -64,6 +64,7 @@ export default function Trash({ changeTheme }) {
   const container = {
     width: "100vw",
     minHeight: "100vh",
+    marginBottom: "2rem",
     paddingTop: theme.spacing(10),
   };
   const progressStyle = {
@@ -166,16 +167,28 @@ export default function Trash({ changeTheme }) {
   }
 
   //render
-  return (
-    <Layout route={router.pathname} changeTheme={changeTheme} toggleMount = {toggleMount}>
-      <Container style={container}>
-        <Typography variant="h5" style={head}>
-          Archived Notes
-        </Typography>
-        <Divider />
-        {progress ? renderProgress() : data.length ? renderNotes() : renderText() }
-        <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
-      </Container>
-    </Layout>
-  );
+  if(fire.auth().currentUser != null){
+    return (
+      <Layout route={router.pathname} changeTheme={changeTheme} toggleMount = {toggleMount}>
+        <Container style={container}>
+          <Typography variant="h5" style={head}>
+            Archived Notes
+          </Typography>
+          <Divider />
+          {progress ? renderProgress() : data.length ? renderNotes() : renderText() }
+          <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
+        </Container>
+      </Layout>
+    );
+  }
+  else{
+    return (
+      <div style={{
+        position:"absolute",
+        top:"50%"
+      }}>
+        {renderProgress()}
+      </div>
+    )
+  }
 }

@@ -50,6 +50,7 @@ export default function Home({ changeTheme }) {
   const container = {
     width: "100vw",
     minHeight: "100vh",
+    marginBottom: "2rem",
     paddingTop: theme.spacing(12),
   };
   const help = {
@@ -65,8 +66,10 @@ export default function Home({ changeTheme }) {
     marginTop: theme.spacing(2),
   };
   const progressStyle = {
-    marginTop: "5rem",
-    height: "3rem"
+    marginTop:"3rem",
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center"
   };
 
   //functions
@@ -150,11 +153,7 @@ export default function Home({ changeTheme }) {
   function renderProgress() {
     return (
       <div style={progressStyle}>
-        <CircularProgress
-          style={{
-            position: "absolute",
-            left: "50%",
-          }} />
+        <CircularProgress/>
       </div>
     );
   }
@@ -176,7 +175,12 @@ export default function Home({ changeTheme }) {
   }
   else{
     return(
-      <div>
+      <div style={{
+        position:"absolute",
+        top:"50%",
+        left:"50%",
+        transform:"translate(-50%, -50%)"
+      }}>
         {renderProgress()}
       </div>
     );

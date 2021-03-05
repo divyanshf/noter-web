@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 
 //MATERIAL-UI
+import { useTheme } from "@material-ui/core/styles"
 import { Dialog } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { DialogActions } from "@material-ui/core";
@@ -17,6 +18,7 @@ import fire from "../../config/fire-config";
 
 export default function NotePop({ handleClose, open, note, user, openSnack, toggleMount }) {
     //initialize
+    const theme = useTheme()
     const [details, setDetails] = useState({
         title: note.title,
         content: note.content,
@@ -26,6 +28,11 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
         query: "(max-device-width: 425px)",
     });
     const descriptionElementRef = useRef(null);
+
+    const contentStyle = {
+        fontSize: 13,
+        color: theme.palette.grey
+    }
 
     //mount
     useEffect(() => {
@@ -80,6 +87,7 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
             </DialogTitle>
             <DialogContent dividers={scroll === "paper"}>
                 <InputBase
+                    style={contentStyle}
                     placeholder="Note it down ..."
                     multiline
                     rowsMin={3}
