@@ -84,7 +84,7 @@ export default function Search({ changeTheme }) {
   function checkNote(note) {
     if(search === "")
         return false;
-    if (note.title.search(search) != -1) {
+    if (note.title.search(search) != -1 || note.content.search() != -1) {
       return true;
     }
     return false;

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     card:{
         maxWidth: "500px",
         margin: "auto",
-        border: `1px solid ${theme.palette.divider}`,
+        border: `2px solid ${theme.palette.divider}`,
         borderRadius:'1rem',
         boxShadow:'none'
     }
