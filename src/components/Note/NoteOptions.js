@@ -118,11 +118,14 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
     //render functions
     function renderPermanentDelete() {
         return (
-            <Tooltip title="Delete Permanently">
-                <IconButton onClick={deleteNotePermanent} style={toggleOptionsStyle}>
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
+                <Tooltip title="Delete Permanently" onClick={deleteNotePermanent}>
                     <DeleteIcon style={iconStyle} />
-                </IconButton>
-            </Tooltip>
+                </Tooltip>
+            </div>
         );
     }
 
