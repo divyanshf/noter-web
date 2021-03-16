@@ -20,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
     card:{
         maxWidth: "500px",
         margin: "auto",
-        boxShadow: `2px 2px 2px ${theme.palette.divider}, -2px -2px 2px ${theme.palette.divider}`,
-        border: `1px solid ${theme.palette.divider}`
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius:'1rem',
+        boxShadow:'none'
     }
 }));
 
@@ -73,7 +74,8 @@ export default function CreateNote({ toggleMount }) {
                     content: note.content,
                     trash: false,
                     archive: false,
-                    star:false
+                    star:false,
+                    timestamp: fire.firestore.Timestamp.now()
                 })
                 .then(() => {
                     setNote({

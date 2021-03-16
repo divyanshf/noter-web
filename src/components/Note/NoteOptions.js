@@ -24,7 +24,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
 
     //styles
     const toggleOptionsStyle = {
-        opacity: `${mouseOver ? "100" : "0"}`,
+        display: `${mouseOver ? "block" : "none"}`,
         // transition: "0.3s ease",
     };
 
@@ -129,35 +129,46 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
     //render
     return (
         <div style={{
-            transition:"0.5s ease"
+            transition:"0.5s ease",
+            opacity: `${mouseOver ? "100" : "0"}`,
+            display:'flex',
         }}>
-            <Tooltip title={note.star ? "Unstar" : "Star"}>
-                <IconButton onClick={starNote} style={toggleOptionsStyle}>
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
+                <Tooltip title={note.star ? "Unstar" : "Star"} onClick={starNote}>
                     {note.star ? (
                         <StarIcon style={iconStyle} />
                     ) : (
                             <StarBorderIcon style={iconStyle} />
                         )}
-                </IconButton>
-            </Tooltip>
-            <Tooltip title={note.archive ? "Unarchive" : "Archive"}>
-                <IconButton onClick={archiveNote} style={toggleOptionsStyle}>
+                </Tooltip>
+            </div>
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
+                <Tooltip title={note.archive ? "Unarchive" : "Archive"} onClick={archiveNote}>
                     {note.archive ? (
                         <UnarchiveSharpIcon style={iconStyle} />
                     ) : (
                             <ArchiveIcon style={iconStyle} />
                         )}
-                </IconButton>
-            </Tooltip>
-            <Tooltip title={note.trash ? "Restore" : "Delete"}>
-                <IconButton onClick={deleteNote} style={toggleOptionsStyle}>
+                </Tooltip>
+            </div>
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
+                <Tooltip title={note.trash ? "Restore" : "Delete"} onClick={deleteNote}>
                     {note.trash ? (
                         <RestoreFromTrashIcon style={iconStyle} />
                     ) : (
                             <DeleteIcon style={iconStyle} />
                         )}
-                </IconButton>
-            </Tooltip>
+                </Tooltip>
+            </div>
             {note.trash ? renderPermanentDelete() : null}
         </div>
     );

@@ -19,8 +19,15 @@ const useStyles = makeStyles((theme) => ({
         width: "90%",
         boxShadow: "none",
         margin: "1rem auto",
-        border: `1px solid ${theme.palette.divider}`
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: '1rem'
     },
+    actionArea: {
+      "&:hover $focusHighlight": {
+        opacity: 0
+      }
+    },
+    focusHighlight: {},
     actions: {
         display: "flex",
         justifyContent: "flex-end",
@@ -32,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
     },
     content:{
         width: '100%',
-        fontSize: 13
+        height:'100%',
+        fontSize: 13,
+        whiteSpace:'pre-wrap'
     }
 }));
 
@@ -53,7 +62,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
 
     //functions
     const handleOpenPop = () => {
-        setOpen(true);
+        setOpen(true)
     };
 
     const handleClosePop = () => {
@@ -71,22 +80,20 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
 
     //render functions
     function renderTitle() {
-        if (note.title.length < 20) return note.title;
-        return note.title.slice(0, 20) + "...";
+        if (note.title.length < 25) return note.title;
+        return note.title.slice(0, 25) + "...";
     }
 
     function renderContent() {
-        if (note.content.length < 143) return note.content;
-        return note.content.slice(0, 143) + "...";
+        if (note.content.length < 140) return note.content;
+        return note.content.slice(0, 140) + "...";
     }
 
     function renderInputBase(){
-        return(
-            <InputBase
-                className={classes.content}
-                value={renderContent()} 
-                multiline
-                disabled />
+        return (
+            <Typography className={classes.content} variant="subtitle1" component='p'>
+                {renderContent()}
+            </Typography>
         );
     }
 
@@ -110,9 +117,14 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
             onMouseLeave={isMobile || isTablet ? showOptions : hideOptions}
             className={classes.root}
         >
-            <CardActionArea>
+            <CardActionArea disableRipple disableTouchRipple classes={{
+                root: classes.actionArea,
+                focusHighlight: classes.focusHighlight
+            }}>
                 <CardContent onClick={handleOpenPop}>
-                    <Typography gutterBottom variant="subtitle1" component="h2">
+                    <Typography gutterBottom variant="heading1" component="h3" style={{
+                        marginBottom:`${renderContent() ? '1rem' : '0'}`
+                    }}>
                         {renderTitle()}
                     </Typography>
                     {renderContent() ? renderInputBase() : null}
@@ -127,7 +139,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
                 toggleMount = {toggleMount}
             />
             <CardActions className={classes.actions}>
-                {mouseOver ? renderNoteOptions() : null}
+                {renderNoteOptions()}
             </CardActions>
         </Card>
     );

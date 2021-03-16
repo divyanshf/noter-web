@@ -15,6 +15,9 @@ import { Grid } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
 import { CircularProgress } from '@material-ui/core';
 
+//  MASONRY
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
+
 //FIREBASE
 import fire from "../config/fire-config";
 
@@ -90,6 +93,7 @@ export default function Home({ changeTheme }) {
       .collection("users")
       .doc(user.email)
       .collection("notes")
+      .orderBy("timestamp", "desc")
       .get()
       .then((snap) => {
         const notes = snap.docs.map((doc) => ({
@@ -130,23 +134,19 @@ export default function Home({ changeTheme }) {
 
   function renderNote(note) {
     return (
-      <Grid item key={note.id} xs={isLarge ? 3 : isMobile ? 12 : 6}>
         <Note openSnackFunction={openSnackFunction} toggleMount={toggleMount} user={userData} note={note} />
-      </Grid>
     );
   }
 
   function renderNotes() {
     return (
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        style={gridContainer}
-      >
-        {data.map(renderNote)}
-      </Grid>
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{350: 1, 750: 2, 900: 4}}
+    >
+        <Masonry>
+          {data.map(renderNote)}
+        </Masonry>
+      </ResponsiveMasonry>
     );
   }
 
@@ -166,7 +166,6 @@ export default function Home({ changeTheme }) {
           <div style={createrContainer}>
             <CreateNote toggleMount={toggleMount} />
           </div>
-          <Divider />
           {progress ? renderProgress() : data.length ? renderNotes() : renderText()}
           <Snackbar open={openSnack} message={snackMessage} setOpen={setOpenSnack} />
         </Container>

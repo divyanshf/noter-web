@@ -100,38 +100,53 @@ export default function Setting({
                 })
     }
 
-    function renderEditButton(){
-        return(
-            <IconButton onClick={uploadImage} style={{
-                position:"absolute",
-                bottom:"0",
-                right:"0",
-                padding:"5px",
-            }}>
-                <Edit style={{
-                    width:"1rem",
-                    height:"1rem"
-                }}/>
-                <input ref={ref} id="image-input" type="file" name="image" onChange={onFileChange} style={{
-                    display:"none"
-                }} />
-            </IconButton>
-        );
-    }
+    // function renderEditButton(){
+    //     return(
+    //         <IconButton onClick={uploadImage} style={{
+    //             position:"absolute",
+    //             padding:"5px",
+    //         }}>
+    //             <Edit style={{
+    //                 width:"1rem",
+    //                 height:"1rem"
+    //             }}/>
+    //             <input ref={ref} id="image-input" type="file" name="image" onChange={onFileChange} style={{
+    //                 display:"none"
+    //             }} />
+    //         </IconButton>
+    //     );
+    // }
 
     function renderAvatar(){
         if(fire.auth().currentUser == null || fire.auth().currentUser.photoURL == null){
             return(
-                <Avatar style={center}>
-                    {userData.displayName ? userData.displayName[0].toUpperCase() : ""}
-                </Avatar>
+                <IconButton onClick={uploadImage} style={{
+                    padding:'0',
+                    margin:'0'
+                }}>
+                    <Avatar style={center}>
+                        {userData.displayName ? userData.displayName[0].toUpperCase() : ""}
+                    </Avatar>
+                    <input ref={ref} id="image-input" type="file" name="image" onChange={onFileChange} style={{
+                        display:"none"
+                    }} />
+                </IconButton>
             );
         }
         else{
             return(
-                <Avatar 
-                    style={center}
-                    src={fire.auth().currentUser.photoURL} />
+                <IconButton onClick={uploadImage} style={{
+                    padding:'0',
+                    margin:'0'
+                }}>
+                    <Avatar 
+                        style={center}
+                        src={fire.auth().currentUser.photoURL}>
+                    </Avatar>
+                    <input ref={ref} id="image-input" type="file" name="image" onChange={onFileChange} style={{
+                        display:"none"
+                    }} />
+                </IconButton>
             )
         }
     }
@@ -152,9 +167,11 @@ export default function Setting({
             }}
         >
             <List style={root}>
-                <ListItem>
+                <ListItem style={{
+                    display:'flex',
+                    justifyContent:'center'
+                }}>
                     {renderAvatar()}
-                    {renderEditButton()}
                 </ListItem>
                 <ListItem>
                     <Typography variant="h6" style={name}> {userData.displayName ? userData.displayName : ""} </Typography>
