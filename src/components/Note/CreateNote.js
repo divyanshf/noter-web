@@ -75,6 +75,7 @@ export default function CreateNote({ toggleMount }) {
                     trash: false,
                     archive: false,
                     star:false,
+                    edited: false,
                     timestamp: fire.firestore.Timestamp.now()
                 })
                 .then(() => {

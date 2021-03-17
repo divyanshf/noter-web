@@ -140,7 +140,7 @@ export default function Search({ changeTheme }) {
 
   function renderNote(note) {
     return (
-        <Note openSnackFunction={openSnackFunction} toggleMount={toggleMount} user={userData} note={note} />
+        <Note key={note.id} openSnackFunction={openSnackFunction} toggleMount={toggleMount} user={userData} note={note} />
     );
   }
 

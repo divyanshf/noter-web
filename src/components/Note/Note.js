@@ -122,7 +122,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
                 focusHighlight: classes.focusHighlight
             }}>
                 <CardContent onClick={handleOpenPop}>
-                    <Typography gutterBottom variant="heading1" component="h3" style={{
+                    <Typography gutterBottom component="h3" style={{
                         marginBottom:`${renderContent() ? '1rem' : '0'}`
                     }}>
                         {renderTitle()}

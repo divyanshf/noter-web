@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 
 //MATERIAL-UI
 import { useTheme } from "@material-ui/core/styles"
-import { Dialog } from "@material-ui/core";
+import { Dialog, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { DialogActions } from "@material-ui/core";
 import { DialogContent } from "@material-ui/core";
@@ -24,25 +24,20 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
         content: note.content,
         id: note.id,
     });
+    const [newDetails, setNewDetails] = useState({
+        title: note.title,
+        content: note.content,
+        id:note.id
+    })
     const isMobile = useMediaQuery({
         query: "(max-device-width: 425px)",
     });
-    const descriptionElementRef = useRef(null);
-
-    const contentStyle = {
-        fontSize: 13,
-        color: theme.palette.grey
+    const titleStyle = {
+        fontSize: '1.5rem'
     }
-
-    //mount
-    useEffect(() => {
-        if (open) {
-            const { current: descriptionElement } = descriptionElementRef;
-            if (descriptionElement !== null) {
-                descriptionElement.focus();
-            }
-        }
-    }, [open]);
+    const contentStyle = {
+        fontSize: '1rem',
+    }
 
     //functions
     function handleChange(event) {
@@ -51,7 +46,11 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
     }
     
     function handleSubmit() {
-        fire
+        if (details.title === newDetails.title && details.content === newDetails.content){
+            handleClose();
+        }
+        else{
+            fire
             .firestore()
             .collection("users")
             .doc(user.email)
@@ -60,6 +59,8 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
             .update({
                 title: details.title,
                 content: details.content,
+                edited:true,
+                timestamp:fire.firestore.Timestamp.now()
             })
             .then(() => {
                 openSnack("Note updated!");
@@ -69,13 +70,32 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
             .catch((err) => {
                 console.log(err);
             });
+        }
+    }
+
+    function getDay(timestamp){
+        if (timestamp.setHours(0,0,0,0) === new Date().setHours(0,0,0,0)){
+            return 'Today';
+        }
+        return timestamp.toString().substr(4, 11)
+    }
+
+    function renderTimestamp(){
+        var timestamp = note.timestamp.toDate()
+        var time = timestamp.toString().substr(16, 5)
+        var date = getDay(timestamp)
+        if (date === 'Today'){
+            return time
+        }
+        return date
     }
 
     //render
     return (
-        <Dialog open={open} onClose={handleClose} scroll="body" fullWidth>
+        <Dialog open={open} onClose={handleSubmit} scroll="body" fullWidth>
             <DialogTitle id="scroll-dialog-title">
                 <InputBase
+                    style={titleStyle}
                     placeholder="Title"
                     multiline
                     rowsMax={2}
@@ -98,11 +118,17 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Close
-                </Button>
+                <Typography style={{
+                    marginRight:'1rem',
+                    color:`${theme.palette.text.disabled}`,
+                    fontSize:'0.8rem'
+                }}>
+                    {(note.edited ? "Edited " : "Created ") + renderTimestamp()}
+                </Typography>
+            </DialogActions>
+            <DialogActions>
                 <Button onClick={handleSubmit} color="primary">
-                    Submit
+                    Close
                 </Button>
             </DialogActions>
         </Dialog>
