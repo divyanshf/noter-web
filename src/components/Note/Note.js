@@ -85,8 +85,8 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
     }
 
     function renderContent() {
-        if (note.content.length < 140) return note.content;
-        return note.content.slice(0, 140) + "...";
+        if (note.content.length < 240) return note.content;
+        return note.content.slice(0, 240) + "...";
     }
 
     function renderInputBase(){

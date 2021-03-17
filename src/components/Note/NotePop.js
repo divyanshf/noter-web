@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 
 //MATERIAL-UI
-import { useTheme } from "@material-ui/core/styles"
+import { useTheme, makeStyles } from "@material-ui/core/styles"
 import { Dialog, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { DialogActions } from "@material-ui/core";
@@ -15,10 +15,30 @@ import { IconButton } from "@material-ui/core";
 
 //FIREBASE
 import fire from "../../config/fire-config";
+import { Fullscreen } from "@material-ui/icons";
+
+const useStyles = makeStyles((theme) => ({
+    root:{
+        '& .MuiPaper-root':{
+            borderRadius:'1rem',
+            border:`2px solid ${theme.palette.divider}`,
+            overflow:'hidden'
+        },
+    },
+    title: {
+        borderTopLeftRadius: '5rem',
+        borderTopRightRadius: '5rem',
+    },
+    actions: {
+        borderBottomLeftRadius: '1rem',
+        borderBottomRightRadius: '1rem',
+    }
+}));
 
 export default function NotePop({ handleClose, open, note, user, openSnack, toggleMount }) {
     //initialize
     const theme = useTheme()
+    const classes = useStyles()
     const [details, setDetails] = useState({
         title: note.title,
         content: note.content,
@@ -92,8 +112,8 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
 
     //render
     return (
-        <Dialog open={open} onClose={handleSubmit} scroll="body" fullWidth>
-            <DialogTitle id="scroll-dialog-title">
+        <Dialog open={open} onClose={handleSubmit} scroll="paper" fullWidth className={classes.root}>
+            <DialogTitle id="scroll-dialog-title" className={classes.title}>
                 <InputBase
                     style={titleStyle}
                     placeholder="Title"
@@ -105,7 +125,7 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
                     value={details.title}
                 />
             </DialogTitle>
-            <DialogContent dividers={scroll === "paper"}>
+            <DialogContent>
                 <InputBase
                     style={contentStyle}
                     placeholder="Note it down ..."
@@ -116,17 +136,17 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
                     onChange={handleChange}
                     value={details.content}
                 />
-            </DialogContent>
-            <DialogActions>
                 <Typography style={{
+                    width:'100%',
                     marginRight:'1rem',
                     color:`${theme.palette.text.disabled}`,
-                    fontSize:'0.8rem'
+                    fontSize:'0.8rem',
+                    textAlign:'right',
                 }}>
                     {(note.edited ? "Edited " : "Created ") + renderTimestamp()}
                 </Typography>
-            </DialogActions>
-            <DialogActions>
+            </DialogContent>
+            <DialogActions className={classes.actions}>
                 <Button onClick={handleSubmit} color="primary">
                     Close
                 </Button>
