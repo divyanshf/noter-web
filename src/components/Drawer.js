@@ -5,7 +5,7 @@ import Link from "next/link";
 //MATERIAL-UI
 import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import { yellow, orange } from '@material-ui/core/colors';
-import { SwipeableDrawer } from "@material-ui/core";
+import { Button, SwipeableDrawer } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import { ListItem } from "@material-ui/core";
 import { ListItemIcon } from "@material-ui/core";
@@ -15,15 +15,12 @@ import { Divider } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { Switch } from "@material-ui/core";
 import NightsStayIcon from "@material-ui/icons/NightsStay";
+import AndroidIcon from '@material-ui/icons/Android';
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import NoteIcon from '@material-ui/icons/Note';
-import AddAlertIcon from '@material-ui/icons/AddAlert';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
 import StarIcon from '@material-ui/icons/Star';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
 
 const styles = makeStyles((theme) => ({
     list: {
@@ -157,10 +154,21 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
                 </div>
                 <Divider />
                 {listItems.map(renderList)}
+                <Divider />
+                <Link href='https://i.diawi.com/N9m3eH'>
+                    <a target='_blank'>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <AndroidIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='Download' />
+                        </ListItem>
+                    </a>
+                </Link>
             </List>
             <div style={drawerBottom}>
                 <Link href="https://github.com/DivyanshFalodiya/Noter">
-                    <a style={anchor}>
+                    <a target='_blank' style={anchor}>
                         <p style={linkStyle} onMouseEnter={()=>{setLinkHover(true)}} onMouseLeave={()=>{setLinkHover(false)}} >Open-Source</p>
                     </a>
                 </Link>

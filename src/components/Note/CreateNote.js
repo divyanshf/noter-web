@@ -100,7 +100,7 @@ export default function CreateNote({ toggleMount }) {
                         <InputBase
                             placeholder="Title"
                             fullWidth
-                            rowsMax={2}
+                            rowsMax={1}
                             onChange={handleNoteChange}
                             name="title"
                             value={note.title}
@@ -121,7 +121,7 @@ export default function CreateNote({ toggleMount }) {
                 </CardContent>
                 <CardActions style={cardsActions}>
                     <Tooltip title="Done">
-                        <IconButton onClick={handleSubmit}>
+                        <IconButton onClick={handleSubmit} disabled={note.title == '' && note.content == '' ? true : false}>
                             <DoneIcon style={iconStyle} />
                         </IconButton>
                     </Tooltip>
