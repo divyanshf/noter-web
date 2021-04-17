@@ -121,9 +121,11 @@ export default function CreateNote({ toggleMount }) {
                 </CardContent>
                 <CardActions style={cardsActions}>
                     <Tooltip title="Done">
-                        <IconButton onClick={handleSubmit} disabled={note.title == '' && note.content == '' ? true : false}>
-                            <DoneIcon style={iconStyle} />
-                        </IconButton>
+                        <span>
+                            <IconButton onClick={handleSubmit} disabled={note.title == '' && note.content == '' ? true : false}>
+                                <DoneIcon style={iconStyle} />
+                            </IconButton>
+                        </span>
                     </Tooltip>
                 </CardActions>
             </Card>

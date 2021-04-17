@@ -72,8 +72,10 @@ export default function Search({ changeTheme }) {
     marginTop: theme.spacing(2),
   };
   const progressStyle = {
-    marginTop: "5rem",
-    height: "3rem"
+    marginTop:"3rem",
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center"
   };
   const head = {
     textAlign: "center",
@@ -186,7 +188,12 @@ export default function Search({ changeTheme }) {
   }
   else{
     return(
-      <div>
+      <div style={{
+        position:"absolute",
+        top:"50%",
+        left:"50%",
+        transform:"translate(-50%, -50%)"
+      }}>
         {renderProgress()}
       </div>
     );

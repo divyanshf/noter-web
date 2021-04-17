@@ -44,11 +44,11 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
         content: note.content,
         id: note.id,
     });
-    const [newDetails, setNewDetails] = useState({
+    const newDetails = {
         title: note.title,
         content: note.content,
         id:note.id
-    })
+    }
     const isMobile = useMediaQuery({
         query: "(max-device-width: 425px)",
     });
