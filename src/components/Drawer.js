@@ -23,11 +23,20 @@ import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
 import StarIcon from '@material-ui/icons/Star';
 
 const styles = makeStyles((theme) => ({
+    root: {
+        width: '100%'
+    },
     list: {
-        width: 250,
+        width: 250
     },
     fullList: {
         width: "auto",
+    },
+    listItem: {
+        borderTopRightRadius: theme.spacing(3),
+        borderBottomRightRadius: theme.spacing(3),
+        marginBottom: theme.spacing(0.5),
+        marginTop: theme.spacing(0.5)
     },
 }));
 
@@ -115,9 +124,9 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
     //render functions
     function renderList(element, index) {
         return (
-            <Link key={index} href={element.link}>
+            <Link key={index} href={element.link} >
                 <a>
-                    <ListItem selected={routeChecker == element.link ? true : false} button key={index}>
+                    <ListItem className={classes.listItem} selected={routeChecker == element.link ? true : false} button key={index}>
                         <ListItemIcon>
                             {element.icon}
                         </ListItemIcon>
@@ -134,6 +143,7 @@ export default function MenuDrawer({ state, toggleDrawer, changeTheme, route }) 
             open={state}
             onClose={toggleDrawer}
             onOpen={toggleDrawer}
+            className={classes.root}
         >
             <List className={classes.list}>
                 <div

@@ -14,8 +14,9 @@ import StarIcon from '@material-ui/icons/Star';
 
 //FIREBASE
 import fire from "../../config/fire-config";
+import { ColorLens } from "@material-ui/icons";
 
-export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggleMount, openSnack }) {
+export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggleMount, openSnack, openColorPop }) {
     //initialize
     const router = useRouter();
     const trash = !note.trash;
@@ -140,6 +141,15 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
                 margin:'0.5rem',
                 cursor:'pointer'
             }}>
+                <Tooltip title="Color" onClick={openColorPop}>
+                    <ColorLens style={iconStyle} />
+                </Tooltip>
+            </div>
+
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
                 <Tooltip title={note.star ? "Unstar" : "Star"} onClick={starNote}>
                     {note.star ? (
                         <StarIcon style={iconStyle} />
@@ -148,6 +158,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
                         )}
                 </Tooltip>
             </div>
+
             <div style={{
                 margin:'0.5rem',
                 cursor:'pointer'
@@ -160,6 +171,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
                         )}
                 </Tooltip>
             </div>
+
             <div style={{
                 margin:'0.5rem',
                 cursor:'pointer'
@@ -172,6 +184,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
                         )}
                 </Tooltip>
             </div>
+            
             {note.trash ? renderPermanentDelete() : null}
         </div>
     );

@@ -21,11 +21,13 @@ input:-webkit-autofill {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
   background: none;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #969696;
+  border-radius: 15px;
 }
 
 a {

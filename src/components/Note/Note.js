@@ -13,6 +13,11 @@ import { CardActionArea } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
+import ColorPopover from "./ColorPopover";
+import {colors, getColor} from '../Colors/Colors'
+
+//FIREBASE
+import fire from "../../config/fire-config";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: "none",
         margin: "1rem auto",
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: '1rem'
+        borderRadius: '1rem',
     },
     actionArea: {
       "&:hover $focusHighlight": {
@@ -59,7 +64,12 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
         isTablet || isMobile ? true : false
         );
     const [openPop, setOpen] = useState(false);
+    const [noteColor, setNoteColor] = useState(getColor(note.color))
 
+    //  Color popover
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    
     //functions
     const handleOpenPop = () => {
         setOpen(true)
@@ -75,6 +85,33 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
 
     function hideOptions() {
         setMouseOver(false);
+    }
+
+    const openColorPop = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const closeColorPop = () => {
+        setAnchorEl(null);
+    };
+
+    const changeColor = (color) => {
+        fire
+            .firestore()
+            .collection("users")
+            .doc(user.email)
+            .collection("notes")
+            .doc(note.id)
+            .update({
+                color: color.color,
+            })
+            .then(() => {
+                toggleMount();
+                setNoteColor(color)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
 
@@ -106,6 +143,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
                 setMouseOver={setMouseOver}
                 toggleMount={toggleMount}
                 openSnack={openSnackFunction}
+                openColorPop={openColorPop}
             />
         );
     }
@@ -116,14 +154,18 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
             onMouseOver={showOptions}
             onMouseLeave={isMobile || isTablet ? showOptions : hideOptions}
             className={classes.root}
+            style={{
+                backgroundColor:`${theme.palette.type === 'dark' ? noteColor.dark : noteColor.light}`
+            }}
         >
             <CardActionArea disableRipple disableTouchRipple classes={{
                 root: classes.actionArea,
                 focusHighlight: classes.focusHighlight
             }}>
                 <CardContent onClick={handleOpenPop}>
-                    <Typography gutterBottom component="h3" style={{
-                        marginBottom:`${renderContent() ? '1rem' : '0'}`
+                    <Typography gutterBottom variant="h6" style={{
+                        marginBottom:`${renderContent() ? '1rem' : '0'}`,
+                        fontWeight: '600'
                     }}>
                         {renderTitle()}
                     </Typography>
@@ -141,6 +183,13 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
             <CardActions className={classes.actions}>
                 {renderNoteOptions()}
             </CardActions>
+            <ColorPopover
+                anchor={anchorEl}
+                open={open}
+                closePopup={closeColorPop}
+                current={note.color}
+                changeColor={changeColor}
+            />
         </Card>
     );
 }

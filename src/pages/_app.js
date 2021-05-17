@@ -19,8 +19,8 @@ function MyApp({ Component, pageProps }) {
   const [darkState, setDarkState] = useState(true);
   const mainPrimaryColor = darkState ? yellow[500] : orange[900];
   const mainSecondaryColor = darkState ? red[500] : red[900];
-  const paperColor = darkState ? grey[900] : grey[50];
-  const backDefaultColor = darkState ? grey[900] : grey[50];
+  const paperColor = darkState ? '#202124' : '#ffffff';
+  const backDefaultColor = darkState ? '#202124' : '#ffffff';
   const palletType = darkState ? "dark" : "light";
   const theme = createMuiTheme({
     palette: {
@@ -36,6 +36,13 @@ function MyApp({ Component, pageProps }) {
         default : backDefaultColor
       },
     },
+    overrides:{
+      MuiList: {
+        root:{
+          width: 'fit-content'
+        }
+      }
+    }
   });
 
   //functions

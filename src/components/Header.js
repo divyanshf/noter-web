@@ -24,7 +24,9 @@ import fire from "../config/fire-config";
 const styles = makeStyles((theme) => ({
   root:{
     boxShadow:"none",
-    borderBottom: `1px solid ${theme.palette.divider}`
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    borderBottomLeftRadius: theme.spacing(2),
+    borderBottomRightRadius: theme.spacing(2),
   }
 }));
 

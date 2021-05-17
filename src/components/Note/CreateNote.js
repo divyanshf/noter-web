@@ -8,7 +8,6 @@ import { Card } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import InputBase from "@material-ui/core/InputBase";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -20,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     card:{
         maxWidth: "500px",
         margin: "auto",
-        border: `2px solid ${theme.palette.divider}`,
+        // border: `2px solid ${theme.palette.divider}`,
         borderRadius:'1rem',
-        boxShadow:'none'
+        boxShadow: `-2px -2px 3px ${theme.palette.divider}, 2px 2px 3px ${theme.palette.divider}` 
     }
 }));
 
