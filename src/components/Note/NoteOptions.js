@@ -129,6 +129,38 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
             </div>
         );
     }
+    function renderStarOption() {
+        return (
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
+                <Tooltip title={note.star ? "Unstar" : "Star"} onClick={starNote}>
+                    {note.star ? (
+                        <StarIcon style={iconStyle} />
+                    ) : (
+                            <StarBorderIcon style={iconStyle} />
+                        )}
+                </Tooltip>
+            </div>
+        );
+    }
+    function renderArchiveOption() {
+        return (
+            <div style={{
+                margin:'0.5rem',
+                cursor:'pointer'
+            }}>
+                <Tooltip title={note.archive ? "Unarchive" : "Archive"} onClick={archiveNote}>
+                    {note.archive ? (
+                        <UnarchiveSharpIcon style={iconStyle} />
+                    ) : (
+                            <ArchiveIcon style={iconStyle} />
+                        )}
+                </Tooltip>
+            </div>
+        );
+    }
 
     //render
     return (
@@ -146,31 +178,8 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
                 </Tooltip>
             </div>
 
-            <div style={{
-                margin:'0.5rem',
-                cursor:'pointer'
-            }}>
-                <Tooltip title={note.star ? "Unstar" : "Star"} onClick={starNote}>
-                    {note.star ? (
-                        <StarIcon style={iconStyle} />
-                    ) : (
-                            <StarBorderIcon style={iconStyle} />
-                        )}
-                </Tooltip>
-            </div>
-
-            <div style={{
-                margin:'0.5rem',
-                cursor:'pointer'
-            }}>
-                <Tooltip title={note.archive ? "Unarchive" : "Archive"} onClick={archiveNote}>
-                    {note.archive ? (
-                        <UnarchiveSharpIcon style={iconStyle} />
-                    ) : (
-                            <ArchiveIcon style={iconStyle} />
-                        )}
-                </Tooltip>
-            </div>
+            {!note.trash ? renderStarOption() : null}
+            {!note.trash ? renderArchiveOption() : null}
 
             <div style={{
                 margin:'0.5rem',

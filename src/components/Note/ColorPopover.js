@@ -69,7 +69,6 @@ export default function ColorPopover({
                 background:`${theme.palette.type === 'dark' ? color.dark : color.light}`,
                 border:`1px solid ${theme.palette.text.primary}`,
                 borderRadius: '50%',
-                // transform: `scale(${isChecked ? 1.3 : 1})`,
                 cursor: 'pointer'
             }}>
                 <div style={{
