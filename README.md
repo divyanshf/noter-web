@@ -8,4 +8,4 @@ The only place to keep your thoughts safe.
 - Authentication.
 
 # Hosted
-You can visit [here](https://noter-b3c7b.web.app/).
+You can visit [here](https://noter-6498a.firebaseapp.com/).
