@@ -100,8 +100,8 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
         return timestamp.toString().substr(4, 11)
     }
 
-    function renderTimestamp(){
-        var timestamp = note.timestamp.toDate()
+    function renderTimestamp() {
+        var timestamp = new fire.firestore.Timestamp(note.timestamp.seconds, note.timestamp.nanoseconds).toDate()
         var time = timestamp.toString().substr(16, 5)
         var date = getDay(timestamp)
         if (date === 'Today'){
