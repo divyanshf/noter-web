@@ -60,30 +60,31 @@ export default function CreateNote({ toggleMount }) {
         setOpen(true);
     };
 
-    async function handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
         if (note.title || note.content) {
-            let res = await fetch(`/api/users/${user.uid}/notes/add`, {
-                method: 'POST',
-                body: JSON.stringify({
+            fire
+                .firestore()
+                .collection("users")
+                .doc(user.email)
+                .collection("notes")
+                .add({
                     title: note.title,
                     content: note.content,
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            res = await res.json();
-            if (res.success) {
-                setNote({
-                    title: "",
-                    content: "",
+                    trash: false,
+                    archive: false,
+                    star:false,
+                    edited: false,
+                    timestamp: fire.firestore.Timestamp.now()
+                })
+                .then(() => {
+                    setNote({
+                        title: "",
+                        content: "",
+                    });
+                    openPop();
+                    toggleMount();
                 });
-                openPop();
-                toggleMount();
-            } else {
-                console.log(res.error);
-            }
         } 
         else 
             console.log("Not accepted!");

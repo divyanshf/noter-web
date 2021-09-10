@@ -42,83 +42,78 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
         setMouseOver(false);
     }
 
-    async function deleteNote() {
-        let res = await fetch(`/api/users/${user.uid}/notes/${note.id}/update`,
-            {
-                method: 'PATCH',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    update: {trash: trash}
-                })
-            }
-        )
-        res = await res.json();
-        if (res.success) {
-            openSnack(res.success);
-            toggleMount();
-        }
-        else {
-            console.log(res.error);
-        }
+    function deleteNote() {
+        fire
+            .firestore()
+            .collection("users")
+            .doc(user.email)
+            .collection("notes")
+            .doc(note.id)
+            .update({
+                trash: trash,
+            })
+            .then(() => {
+                openSnack(`${note.trash ? "Note restored!" : "Note trashed!"}`);
+                toggleMount();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
-    async function deleteNotePermanent() {
-        let res = await fetch(`/api/users/${user.uid}/notes/${note.id}/delete`, { method: 'DELETE' })
-        res = await res.json();
-        if (res.success) {
-            openSnack(res.success);
-            toggleMount();
-        }
-        else {
-            console.log(res.error);
-        }
+    function deleteNotePermanent() {
+        fire
+            .firestore()
+            .collection("users")
+            .doc(user.email)
+            .collection("notes")
+            .doc(note.id)
+            .delete()
+            .then(() => {
+                openSnack("Note deleted!");
+                toggleMount();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
-    async function archiveNote() {
-        let res = await fetch(`/api/users/${user.uid}/notes/${note.id}/update`,
-            {
-                method: 'PATCH',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    update: {archive: archive}
-                })
-            }
-        )
-        res = await res.json();
-        if (res.success) {
-            openSnack(res.success);
-            toggleMount();
-        }
-        else {
-            console.log(res.error);
-        }
+    function archiveNote() {
+        fire
+            .firestore()
+            .collection("users")
+            .doc(user.email)
+            .collection("notes")
+            .doc(note.id)
+            .update({
+                archive: archive,
+            })
+            .then(() => {
+                openSnack(`${note.archive ? "Note unarchived!" : "Note archived!"}`);
+                toggleMount();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
-    async function starNote() {
-        let res = await fetch(`/api/users/${user.uid}/notes/${note.id}/update`,
-            {
-                method: 'PATCH',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    update: {star: star}
-                })
-            }
-        )
-        res = await res.json();
-        console.log(res);
-        if (res.success) {
-            openSnack(res.success);
-            toggleMount();
-        }
-        else {
-            console.log(res.error);
-        }
+    function starNote() {
+        fire
+            .firestore()
+            .collection("users")
+            .doc(user.email)
+            .collection("notes")
+            .doc(note.id)
+            .update({
+                star: star,
+            })
+            .then(() => {
+                openSnack(`${note.star ? "Note Unstarred!" : "Note starred!"}`);
+                toggleMount();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     //render functions

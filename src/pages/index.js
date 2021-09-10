@@ -32,8 +32,7 @@ export default function Home({ changeTheme }) {
   const theme = useTheme();
   const [userData, setUserData] = useState({
     displayName: "",
-    email: "",
-    uid: ""
+    email: ""
   });
   const [progress, setProgress] = useState(true);
   const [data, setData] = useState([]);
@@ -77,22 +76,33 @@ export default function Home({ changeTheme }) {
   };
 
   //functions
-  // function checkNote(note) {
-  //   if (!note.trash && !note.archive) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  function checkNote(note) {
+    if (!note.trash && !note.archive) {
+      return true;
+    }
+    return false;
+  }
 
   function toggleMount() {
-    setProgress(true)
     setMount(prev => (!prev));
   }
 
-  async function collectNotes(id) {
-    let res = await fetch(`/api/users/${id}/notes`, { method: 'GET' });
-    res = await res.json();
-    return res;
+  function collectNotes(user) {
+    fire
+      .firestore()
+      .collection("users")
+      .doc(user.email)
+      .collection("notes")
+      .orderBy("timestamp", "desc")
+      .get()
+      .then((snap) => {
+        const notes = snap.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(notes.filter(checkNote));
+        setProgress(false);
+      });
   }
 
   function openSnackFunction(message) {
@@ -105,11 +115,7 @@ export default function Home({ changeTheme }) {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserData(user);
-        collectNotes(user.uid).then(res => {
-          if(!res.error)
-            setData(res.notes);
-          setProgress(false);
-        })
+        collectNotes(user);
       }
       else {
         router.push("/auth");
@@ -153,7 +159,7 @@ export default function Home({ changeTheme }) {
   }
 
   //render
-  if(userData.uid != ""){
+  if(userData.displayName != ""){
     return (
       <Layout route={router.pathname} changeTheme={changeTheme}>
         <Container style={container}>

@@ -42,8 +42,7 @@ export default function Trash({ changeTheme }) {
   const [snackMessage, setSnackMessage] = useState("");
   const [userData, setUserData] = useState({
     displayName:"",
-    email: "",
-    uid: "",
+    email:""
   });
   const [data, setData] = useState([]);
   const [mount, setMount] = useState(0);
@@ -79,15 +78,32 @@ export default function Trash({ changeTheme }) {
   };
 
   //functions
+  function checkNote(note) {
+    if (!note.trash && note.archive) {
+      return true;
+    }
+    return false;
+  }
+
   function toggleMount() {
-    setProgress(true)
     setMount(prev => (!prev));
   }
 
-  async function collectNotes(id) {
-    let res = await fetch(`/api/users/${id}/notes/archives`, { method: 'GET' })
-    res = await res.json();
-    return res;
+  function collectNotes(user) {
+    fire
+      .firestore()
+      .collection("users")
+      .doc(user.email)
+      .collection("notes")
+      .get()
+      .then((snap) => {
+        const notes = snap.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(notes.filter(checkNote));
+        setProgress(false);
+      });
   }
 
   //mount
@@ -95,12 +111,7 @@ export default function Trash({ changeTheme }) {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserData(user);
-        collectNotes(user.uid).then(res => {
-          if(!res.error)
-            setData(res.notes);
-          else console.log(res.error);
-          setProgress(false);
-        })
+        collectNotes(user);
       }
       else {
         router.push("/auth");
