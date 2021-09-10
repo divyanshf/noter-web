@@ -33,7 +33,8 @@ export default function Search({ changeTheme }) {
   const theme = useTheme();
   const [userData, setUserData] = useState({
     displayName: "",
-    email: ""
+    email: "",
+    uid:""
   });
   const [progress, setProgress] = useState(true);
   const [data, setData] = useState([]);
@@ -83,36 +84,18 @@ export default function Search({ changeTheme }) {
   };
 
   //functions
-  function checkNote(note) {
-    if(search === "")
-        return false;
-    if (!note.archive && !note.trash){
-      if (note.title.search(search) != -1 || note.content.search(search) != -1) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   function toggleMount() {
+    setProgress(true);
     setMount(prev => (!prev));
   }
 
-  function collectNotes(user) {
-    fire
-      .firestore()
-      .collection("users")
-      .doc(user.email)
-      .collection("notes")
-      .get()
-      .then((snap) => {
-        const notes = snap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setData(notes.filter(checkNote));
-        setProgress(false);
-      });
+  async function collectNotes(id) {
+    if (search) {
+      let res = await fetch(`/api/users/${id}/notes/search/${search}/`, { method: 'GET' })
+      res = await res.json();
+      return res;
+    }
+    return {error: 'Empty search'}
   }
 
   function openSnackFunction(message) {
@@ -125,7 +108,12 @@ export default function Search({ changeTheme }) {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserData(user);
-        collectNotes(user);
+        collectNotes(user.uid).then(res => {
+          if(!res.error)
+            setData(res.notes);
+          else console.log(res.error);
+          setProgress(false);
+        })
       }
       else {
         router.push("/auth");

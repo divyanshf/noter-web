@@ -95,23 +95,41 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
         setAnchorEl(null);
     };
 
-    const changeColor = (color) => {
-        fire
-            .firestore()
-            .collection("users")
-            .doc(user.email)
-            .collection("notes")
-            .doc(note.id)
-            .update({
-                color: color.color,
+    const changeColor = async (color) => {
+        let res = await fetch(`/api/users/${user.uid}/notes/${note.id}/update`, {
+            method: 'PATCH',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify({
+                update:{color: color.color}
             })
-            .then(() => {
-                toggleMount();
-                setNoteColor(color)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        })
+
+        res = await res.json();
+        if (res.success) {
+            toggleMount();
+            setNoteColor(color)
+        }
+        else {
+            console.log(res.error);
+        }
+        // fire
+        //     .firestore()
+        //     .collection("users")
+        //     .doc(user.email)
+        //     .collection("notes")
+        //     .doc(note.id)
+        //     .update({
+        //         color: color.color,
+        //     })
+        //     .then(() => {
+        //         toggleMount();
+        //         setNoteColor(color)
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
     }
 
 
