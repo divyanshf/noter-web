@@ -33,7 +33,8 @@ export default function Search({ changeTheme }) {
   const theme = useTheme();
   const [userData, setUserData] = useState({
     displayName: "",
-    email: ""
+    email: "",
+    uid:""
   });
   const [progress, setProgress] = useState(true);
   const [data, setData] = useState([]);
@@ -102,7 +103,7 @@ export default function Search({ changeTheme }) {
     fire
       .firestore()
       .collection("users")
-      .doc(user.email)
+      .doc(user.uid)
       .collection("notes")
       .get()
       .then((snap) => {

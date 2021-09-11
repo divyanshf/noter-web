@@ -66,7 +66,7 @@ export default function CreateNote({ toggleMount }) {
             fire
                 .firestore()
                 .collection("users")
-                .doc(user.email)
+                .doc(user.uid)
                 .collection("notes")
                 .add({
                     title: note.title,

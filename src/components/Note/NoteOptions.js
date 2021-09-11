@@ -46,7 +46,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
         fire
             .firestore()
             .collection("users")
-            .doc(user.email)
+            .doc(user.uid)
             .collection("notes")
             .doc(note.id)
             .update({
@@ -65,7 +65,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
         fire
             .firestore()
             .collection("users")
-            .doc(user.email)
+            .doc(user.uid)
             .collection("notes")
             .doc(note.id)
             .delete()
@@ -82,7 +82,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
         fire
             .firestore()
             .collection("users")
-            .doc(user.email)
+            .doc(user.uid)
             .collection("notes")
             .doc(note.id)
             .update({
@@ -101,7 +101,7 @@ export default function NoteOptions({ mouseOver, setMouseOver, note, user, toggl
         fire
             .firestore()
             .collection("users")
-            .doc(user.email)
+            .doc(user.uid)
             .collection("notes")
             .doc(note.id)
             .update({

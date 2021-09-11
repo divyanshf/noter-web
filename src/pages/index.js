@@ -32,7 +32,8 @@ export default function Home({ changeTheme }) {
   const theme = useTheme();
   const [userData, setUserData] = useState({
     displayName: "",
-    email: ""
+    email: "",
+    uid:""
   });
   const [progress, setProgress] = useState(true);
   const [data, setData] = useState([]);
@@ -91,7 +92,7 @@ export default function Home({ changeTheme }) {
     fire
       .firestore()
       .collection("users")
-      .doc(user.email)
+      .doc(user.uid)
       .collection("notes")
       .orderBy("timestamp", "desc")
       .get()

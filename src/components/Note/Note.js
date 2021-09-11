@@ -99,7 +99,7 @@ export default function Note({ note, user, toggleMount, openSnackFunction }) {
         fire
             .firestore()
             .collection("users")
-            .doc(user.email)
+            .doc(user.uid)
             .collection("notes")
             .doc(note.id)
             .update({

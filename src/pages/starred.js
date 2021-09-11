@@ -42,7 +42,8 @@ export default function Trash({ changeTheme }) {
   const [snackMessage, setSnackMessage] = useState("");
   const [userData, setUserData] = useState({
     displayName:"",
-    email:""
+    email: "",
+    uid:""
   });
   const [data, setData] = useState([]);
   const [mount, setMount] = useState(0);
@@ -93,7 +94,7 @@ export default function Trash({ changeTheme }) {
     fire
       .firestore()
       .collection("users")
-      .doc(user.email)
+      .doc(user.uid)
       .collection("notes")
       .get()
       .then((snap) => {
