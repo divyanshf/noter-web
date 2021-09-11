@@ -80,13 +80,14 @@ export default function Trash({ changeTheme }) {
 
   //functions
   function checkNote(note) {
-    if (!note.archive && !note.trash && note.star) {
+    if (!note.trash && !note.archive && note.star) {
       return true;
     }
     return false;
   }
 
   function toggleMount() {
+    setProgress(true)
     setMount(prev => (!prev));
   }
 
@@ -112,7 +113,7 @@ export default function Trash({ changeTheme }) {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserData(user);
-        collectNotes(user);
+        collectNotes(user)
       }
       else {
         router.push("/auth");

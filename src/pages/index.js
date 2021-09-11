@@ -85,6 +85,7 @@ export default function Home({ changeTheme }) {
   }
 
   function toggleMount() {
+    setProgress(true)
     setMount(prev => (!prev));
   }
 
@@ -116,7 +117,7 @@ export default function Home({ changeTheme }) {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserData(user);
-        collectNotes(user);
+        collectNotes(user)
       }
       else {
         router.push("/auth");
@@ -160,7 +161,7 @@ export default function Home({ changeTheme }) {
   }
 
   //render
-  if(userData.displayName != ""){
+  if(userData.uid != ""){
     return (
       <Layout route={router.pathname} changeTheme={changeTheme}>
         <Container style={container}>

@@ -60,7 +60,7 @@ export default function CreateNote({ toggleMount }) {
         setOpen(true);
     };
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         if (note.title || note.content) {
             fire
@@ -71,11 +71,6 @@ export default function CreateNote({ toggleMount }) {
                 .add({
                     title: note.title,
                     content: note.content,
-                    trash: false,
-                    archive: false,
-                    star:false,
-                    edited: false,
-                    timestamp: fire.firestore.Timestamp.now()
                 })
                 .then(() => {
                     setNote({
@@ -84,10 +79,8 @@ export default function CreateNote({ toggleMount }) {
                     });
                     openPop();
                     toggleMount();
-                });
+                })
         } 
-        else 
-            console.log("Not accepted!");
     }
 
     //render

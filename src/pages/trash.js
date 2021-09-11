@@ -87,6 +87,7 @@ export default function Trash({ changeTheme }) {
   }
 
   function toggleMount() {
+    setProgress(true)
     setMount(prev => (!prev));
   }
 
@@ -112,7 +113,7 @@ export default function Trash({ changeTheme }) {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserData(user);
-        collectNotes(user);
+        collectNotes(user)
       }
       else {
         router.push("/auth");
