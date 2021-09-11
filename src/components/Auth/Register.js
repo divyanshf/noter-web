@@ -72,7 +72,6 @@ export default function Register() {
     function onSubmit() {
         fire
             .auth()
-            .setPersistence(fire.auth.Auth.Persistence.LOCAL)
             .createUserWithEmailAndPassword(user.username, user.pass)
             .then(() => {
                 updateProfile();
