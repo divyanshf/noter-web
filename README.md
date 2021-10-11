@@ -1,7 +1,7 @@
 # Noter (Web)
 
 ## Description
-An web application to keep your thoughts and ideas safe.
+A web application to keep your thoughts and ideas safe.
 
 ## Features
 - Add/Edit/Delete the notes.
