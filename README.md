@@ -7,5 +7,14 @@ The only place to keep your thoughts safe.
 - Search for notes.
 - Authentication.
 
+## Technologies / Libraries Used
+- NextJS
+- Material UI
+- Javascript
+- Firebase
+
+## Motivation
+- Getting to understand NextJS.
+
 # Hosted
 You can visit [here](https://noter-6498a.firebaseapp.com/).
