@@ -1,20 +1,35 @@
-# Noter
-The only place to keep your thoughts safe.
+# Noter (Web)
 
-# Features
-- Add, archive and delete notes.
-- Star notes important to you.
-- Search for notes.
-- Authentication.
+## Description
+An web application to keep your thoughts and ideas safe.
+
+## Features
+- Add/Edit/Delete the notes.
+- Mark your notes as important by starring them.
+- Customize the notes as you like.
+- Search for a specific note.
 
 ## Technologies / Libraries Used
 - NextJS
 - Material UI
-- Javascript
 - Firebase
 
 ## Motivation
-- Getting to understand NextJS.
+- Getting to know NextJS.
 
-# Hosted
-You can visit [here](https://noter-6498a.firebaseapp.com/).
+## Build From Source
+
+### Prerequisite
+- Node
+- NPM
+- Firebase Account
+
+### Setup
+- Clone this repository.
+- Create a firebase application.
+- Create a fire.js file in src/config and add the connection settings provided on the firebase application console.
+- Build and run.
+
+## Hosting
+You can view the live project [here](https://noter-6498a.web.app/)
+ 
