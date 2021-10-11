@@ -73,7 +73,7 @@ export default function NotePop({ handleClose, open, note, user, openSnack, togg
             fire
             .firestore()
             .collection("users")
-            .doc(user.email)
+            .doc(user.uid)
             .collection("notes")
             .doc(details.id)
             .update({

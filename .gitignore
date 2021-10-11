@@ -11,7 +11,9 @@
 /firestore.rules
 /firestore.indexes.json
 /.firebaserc
+/storage.rules
 .firebase
+
 
 # testing
 /coverage

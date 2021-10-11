@@ -71,6 +71,11 @@ export default function CreateNote({ toggleMount }) {
                 .add({
                     title: note.title,
                     content: note.content,
+                    archive: false,
+                    edited:false,
+                    star:false,
+                    trash:false,
+                    timestamp: fire.firestore.Timestamp.now()
                 })
                 .then(() => {
                     setNote({
